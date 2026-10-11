@@ -19,7 +19,7 @@
     }).join('') + '</ul>';
   }
 
-  /* ------------------------------------------------------------------ cards */
+  /* --- cards */
 
   function productCard(p, ctx) {
     var rel = latest(p);
@@ -65,7 +65,7 @@
   }
 
 
-  /* ------------------------------------------------------------------ changelog */
+  /* --- changelog */
 
   function allReleases(products) {
     var out = [];
@@ -95,7 +95,7 @@
       withRel.map(function (p) { return '<button class="chip" type="button" data-filter="' + esc(p.id) + '" aria-pressed="false">' + esc(p.name) + '</button>'; }).join('');
   }
 
-  /* ------------------------------------------------------------------ licenses page */
+  /* --- licenses page */
 
   function licensesList(products, ctx) {
     return products.map(function (p) {

@@ -12,7 +12,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  /* ------------------------------------------------------------------ helpers */
+  /* --- helpers */
 
   function esc(v) {
     return String(v == null ? '' : v)
@@ -146,7 +146,7 @@
       .map(function (k) { return PLATFORM_NAME[k]; }).join(', ');
   }
 
-  /* ------------------------------------------------------------------ icons */
+  /* --- icons */
 
   var I = {
     download: '<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>',
@@ -202,7 +202,7 @@
     return '<svg class="i' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + (I[name] || I.box) + '</svg>';
   }
 
-  /* ------------------------------------------------------------------ small parts */
+  /* --- small parts */
 
   function pill(status) {
     return '<span class="pill pill--' + esc(status) + '">' + esc(STATUS_NAME[status] || status) + '</span>';
@@ -258,12 +258,12 @@
       '" alt="' + esc(alt || '') + '" width="1440" height="900"' + (cls ? ' class="' + cls + '"' : '') + (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async"></picture>';
   }
 
-  /* ------------------------------------------------------------------ dividers */
+  /* --- dividers */
 
   // A section divider: a hairline on the container edges, fading out at both ends.
   function rule() { return '<div class="container rule-wrap" aria-hidden="true"><div class="rule"></div></div>'; }
 
-  /* ------------------------------------------------------------------ download CTA */
+  /* --- download CTA */
 
   // Pre-rendered for Windows; app.js retargets it to the visitor's OS.
   function downloadCta(p, ctx, opts) {
@@ -289,7 +289,7 @@
       '</div>';
   }
 
-  /* ------------------------------------------------------------------ verify */
+  /* --- verify */
 
   var verifyCount = 0;
   function verifyBlock(file, opts) {
@@ -339,7 +339,7 @@
       '<button class="copy copy--icon" type="button" data-copy="' + esc(f.sha256) + '" aria-label="Copy SHA-256 of ' + esc(f.filename) + '">' + icon('copy') + '<span class="copy__txt">Copy</span></button></span>';
   }
 
-  /* ------------------------------------------------------------------ downloads table */
+  /* --- downloads table */
 
   function fileRow(f, ctx, p, rel) {
     var size = fmtSize(f.size);
@@ -385,7 +385,7 @@
     return '<ul class="notes">' + (rel.notes || []).map(function (n) { return '<li>' + txt(n) + '</li>'; }).join('') + '</ul>';
   }
 
-  /* ------------------------------------------------------------------ license */
+  /* --- license */
 
   function licenseBlock(p, ctx) {
     var L = p.license || {};
@@ -407,14 +407,14 @@
     return h + '</div>';
   }
 
-  /* ------------------------------------------------------------------ section heads */
+  /* --- section heads */
 
   function sectionHead(eyebrow, title, lead, id) {
     return '<header class="sec-head"' + (id ? ' id="' + id + '"' : '') + '><p class="eyebrow">' + esc(eyebrow) + '</p><h2>' + esc(title) + '</h2>' +
       (lead ? '<p class="lead">' + txt(lead) + '</p>' : '') + '</header>';
   }
 
-  /* ------------------------------------------------------------------ structured data */
+  /* --- structured data */
 
   function jsonLd(p, site, pageUrl) {
     var rel = latest(p);

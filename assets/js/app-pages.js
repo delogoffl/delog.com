@@ -6,7 +6,7 @@
   'use strict';
   var $ = A.$, $$ = A.$$, R = A.R, SITE = A.SITE, PRODUCTS = A.PRODUCTS, body = A.body, ctx = A.ctx, C = A.C, reduceMotion = A.reduceMotion, byId = A.byId, param = A.param, OS = A.OS, OS_LABEL = A.OS_LABEL, pickFile = A.pickFile, firstAvailablePlatform = A.firstAvailablePlatform;
 
-  /* ---------------------------------------------------------------- download page */
+  /* --- download page */
 
   function renderDownloadPage(el) {
     var p = byId(param('product') || '');
@@ -107,7 +107,7 @@
     return true;
   }
 
-  /* ---------------------------------------------------------------- filters */
+  /* --- filters */
 
   function setupFilters() {
     $$('[data-filters]').forEach(function (bar) {

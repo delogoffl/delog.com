@@ -6,7 +6,7 @@
   'use strict';
   var $ = A.$, $$ = A.$$, root = A.root, body = A.body, reduceMotion = A.reduceMotion;
 
-  /* ---------------------------------------------------------------- launch page */
+  /* --- launch page */
 
   // The product bar slides in once the hero has scrolled away; the link of the section you are …
   function setupLnav() {

@@ -94,6 +94,12 @@ window.DELOG_PRODUCTS = [
           visual: { type: 'shot', src: 'assets/products/driftly/screens/recorder', alt: 'Driftly Recorder replaying a “Sign in and browse products” flow, paused at step 6 of 7, with an assertion outlined on the page and a filmstrip of every step.' }
         },
         {
+          id: 'bugs', layout: 'split-rev', eyebrow: 'Bug reports',
+          title: 'Bugs, written for you.',
+          text: 'Press Report bug on any change, finding, failed request or test. Driftly writes the steps, expected and actual, attaches screenshots, console errors and failed requests — and files it to Jira, GitHub, Linear or Azure DevOps.',
+          visual: { type: 'shot', src: 'assets/products/driftly/screens/bugs', alt: 'A Driftly bug report filed to Jira as QA-128: severity, priority and status, a summary, three steps to reproduce with screenshots, and the tracker, re-check and history panels.' }
+        },
+        {
           id: 'release', layout: 'verdict', eyebrow: 'Release checks',
           title: 'One answer: GO or NO‑GO.',
           text: 'Before you ship, one run across visual, security, performance, API and recorded tests — with every blocking rule, its evidence, and a comparison with the last release.',
@@ -144,7 +150,8 @@ window.DELOG_PRODUCTS = [
         { size: 's', anim: 'api', title: 'API testing', text: 'Collections, flows, assertions, data files.' },
         { size: 's', anim: 'ask', title: 'Ask Driftly', text: 'Answers from your own history. Works offline.' },
         { size: 'l', anim: 'ci', title: 'CI gating', text: 'The same verdict on your runner, with JUnit and SARIF.' },
-        { size: 'l', anim: 'share', title: 'Shareable', text: 'One HTML file. Nothing uploaded.' }
+        { size: 's', anim: 'share', title: 'Shareable', text: 'One HTML file. Nothing uploaded.' },
+        { size: 's', anim: 'bug', title: 'Bug reports', text: 'Steps, expected and actual — filed for you.' }
       ],
       // Tech specs: groups → rows. A row is { label?, value } or { label?, list: [...] }.
       // value 'release:size' / 'release:version' / 'release:date' is filled from the latest release.
@@ -184,7 +191,8 @@ window.DELOG_PRODUCTS = [
           { label: 'Test code', list: ['Playwright', 'Selenium', 'Cypress', 'WebdriverIO', 'Puppeteer'] },
           { label: 'API', list: ['Postman', 'OpenAPI', 'Test code'] },
           { label: 'Reports', list: ['PDF', 'Web page', 'Markdown', 'JSON', 'JUnit XML'] },
-          { label: 'Dashboards', value: 'Read-only, as one self-contained HTML file or a ZIP, with an optional password' }
+          { label: 'Dashboards', value: 'Read-only, as one self-contained HTML file or a ZIP, with an optional password' },
+          { label: 'Bug reports', list: ['Markdown', 'Jira', 'Plain text', 'Web page', 'PDF', 'ZIP'] }
         ] },
         { group: 'CI', rows: [
           { label: 'Command', value: '`driftly ci` — exit codes 0, 1 and 2' },
@@ -193,6 +201,7 @@ window.DELOG_PRODUCTS = [
         ] },
         { group: 'Integrations', rows: [
           { label: 'Alerts', list: ['Desktop notifications', 'Slack', 'Microsoft Teams', 'Email (SMTP)', 'Signed webhooks', 'Jira'] },
+          { label: 'Bug trackers', list: ['Jira', 'GitHub', 'Linear', 'Azure DevOps'] },
           { label: 'Test suites', list: ['Selenium', 'Playwright', 'Cypress'] },
           { label: 'Real-user data', value: 'Chrome UX Report, optional' }
         ] },
@@ -222,6 +231,8 @@ window.DELOG_PRODUCTS = [
       { src: 'assets/products/driftly/screens/api', title: 'API testing', alt: 'Driftly API testing: collections including APIs discovered from website checks, and a GET request to /api/me failing with 401 Unauthorized.' },
       { src: 'assets/products/driftly/screens/api-flow', title: 'API flows', alt: 'Driftly API flow graph: log-in and product requests feeding a token and product id into who-am-I, cart and add-to-cart requests, with one request failing.' },
       { src: 'assets/products/driftly/screens/recorder', title: 'Recorder', alt: 'Driftly Recorder replaying a “Sign in and browse products” flow, paused at step 6 of 7, with a filmstrip of every step and the step’s check settings.' },
+      { src: 'assets/products/driftly/screens/bugs', title: 'Bug report', alt: 'A Driftly bug report filed to Jira as QA-128, with severity, priority, status, a summary, steps to reproduce with screenshots, and the tracker, re-check and history panels.' },
+      { src: 'assets/products/driftly/screens/bug-annotate', title: 'Marking up a screenshot', alt: 'Driftly’s screenshot editor over a close-up of a change: boxes, an arrow and a “This moved” label in red, with tools for boxes, arrows, text, highlight and blur.' },
       { src: 'assets/products/driftly/screens/reports', title: 'Reports', alt: 'Driftly Reports: live cards for changes, security, performance, API, Recorder and release checks, and a shelf of saved reports.' },
       { src: 'assets/products/driftly/screens/shared-dashboard', title: 'Read-only dashboard', alt: 'A read-only dashboard exported from Driftly as one HTML file: sections with item counts, severity filters, overview tiles and a 14-day change chart.' },
       { src: 'assets/products/driftly/screens/settings', title: 'Settings', alt: 'Driftly Settings: tiles for appearance with accent colours, storage, AI assistant, privacy with offline mode, advanced, alerts and integrations, backup and transfer, and general.' }
@@ -241,6 +252,7 @@ window.DELOG_PRODUCTS = [
           'Website change monitoring with plain-language summaries, noise control, approved baselines and a time machine for every page.',
           'Security, Performance, API and Recorder testing windows.',
           'Release checks with a GO / NO-GO verdict, scheduled monitoring and `driftly ci` for pipelines.',
+          'Bug reports from any change, finding or failed test: steps, expected and actual written for you, marked-up screenshots, capture mode, duplicate warnings and filing to Jira, GitHub, Linear or Azure DevOps.',
           'Read-only dashboards exported as a single offline HTML file.',
           'Automatic updates are off until you turn them on in Settings.'
         ],

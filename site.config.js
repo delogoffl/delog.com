@@ -51,8 +51,8 @@ window.DELOG_SITE = {
   downloadHost: '',                     // who serves installers if not the same host, e.g. 'Cloudflare R2'
 
   /* ── Legal documents ─────────────────────────────────────────────────────────────────────── */
-  termsLastUpdated: '2026-10-10',       // YYYY-MM-DD — Terms of Use and EULA
-  privacyLastUpdated: '2026-10-10',     // YYYY-MM-DD — Privacy Policy
+  termsLastUpdated: '2026-10-11',       // YYYY-MM-DD — Terms of Use and EULA
+  privacyLastUpdated: '2026-10-11',     // YYYY-MM-DD — Privacy Policy
   eulaVersion: '1.0',                   // version of the Driftly End User Licence Agreement
 
   /* ── Social links (optional) — e.g. { label: 'LinkedIn', url: 'https://…' } ──────────────── */

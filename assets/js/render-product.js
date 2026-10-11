@@ -10,7 +10,7 @@
   var licensePill = R.licensePill, licenseLabel = R.licenseLabel, img = R.img, shot = R.shot, heroShot = R.heroShot, plain = R.plain, rule = R.rule, downloadCta = R.downloadCta;
   var verifyBlock = R.verifyBlock, filesTable = R.filesTable, notesList = R.notesList, licenseBlock = R.licenseBlock, sectionHead = R.sectionHead;
 
-  /* ------------------------------------------------------------------ cinematic launch page */
+  /* --- cinematic launch page */
 
   // The product's section links: a group inside the floating nav pill (it takes over from the …
   function productSections(p) {
@@ -79,7 +79,8 @@
     api: '<span class="a-api"><code>GET /api/me</code><span class="a-api__s"><b class="a-api__ok">200</b><b class="a-api__bad">401</b></span></span>',
     ask: '<span class="a-ask"><span class="a-ask__me">What changed today?</span><span class="a-ask__ai">6 pages changed — 2 are critical.</span></span>',
     ci: '<span class="a-ci"><code>PS&gt; driftly ci "Demo Store"</code><code class="a-ci__v">NO-GO — exit 1</code></span>',
-    share: '<span class="a-share"><span class="a-share__file">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"/><path d="M14 3.5V8h4.5"/></svg>' + '<span>dashboard.html</span></span><span class="a-share__lock">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>' + '</span></span>'
+    share: '<span class="a-share"><span class="a-share__file">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"/><path d="M14 3.5V8h4.5"/></svg>' + '<span>dashboard.html</span></span><span class="a-share__lock">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>' + '</span></span>',
+    bug: '<span class="a-bug"><span><b>Expected</b>Pay now</span><span class="a-bug__bad"><b>Actual</b>Place order</span><em>QA-128 · filed</em></span>'
   };
 
   // Giant stats. Number, label and detail live in ONE element, in reading order, so they can …
@@ -261,7 +262,7 @@
   }
 
 
-  /* ------------------------------------------------------------------ product page */
+  /* --- product page */
   function productPage(p, ctx) {
     if (p.launch) return launchPage(p, ctx);
     var rel = latest(p);
