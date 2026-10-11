@@ -1,0 +1,45 @@
+# Delog website — files that never belong in the repository.
+
+# Review screenshots and reports from tools/review.mjs and tools/perf.mjs — never deploy these.
+.review/
+
+# Dependencies (the site has none, but the tools may be run with a local install).
+node_modules/
+
+# Installer binaries copied in by tools/add-release.mjs. They are too large for git and for most
+# static hosts (GitHub rejects files over 100 MB); serve them from a release bucket instead — see
+# "Large installer files" in README.md. The folder structure and any small text files stay tracked.
+downloads/**/*.exe
+downloads/**/*.msi
+downloads/**/*.msix
+downloads/**/*.dmg
+downloads/**/*.pkg
+downloads/**/*.AppImage
+downloads/**/*.deb
+downloads/**/*.rpm
+downloads/**/*.zip
+downloads/**/*.tar.gz
+downloads/**/*.blockmap
+
+# Logs and local scratch files.
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+
+# Local environment and secrets (the site doesn't use any; keep it that way).
+.env
+.env.*
+
+# Operating system files.
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# Editors.
+.vscode/
+.idea/
+*.swp
+*~

@@ -1,0 +1,12 @@
+# Keep text files with LF line endings on every machine (the site is served as-is).
+* text=auto eol=lf
+
+# Binary assets: never touch line endings or show text diffs.
+*.png binary
+*.jpg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff2 binary
+*.exe binary
+*.zip binary
