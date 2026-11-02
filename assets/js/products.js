@@ -246,7 +246,7 @@ window.DELOG_PRODUCTS = [
       // @releases driftly — tools/add-release.mjs inserts new releases below this line
       /* @release driftly 0.1.0 */ {
         version: '0.1.0',
-        date: '2026-10-10', // PLACEHOLDER: set to the real release date (add-release.mjs sets today's date)
+        date: '2026-11-02',
         notes: [
           'First public release, for Windows 10 and 11 (x64).',
           'Website change monitoring with plain-language summaries, noise control, approved baselines and a time machine for every page.',
@@ -261,10 +261,10 @@ window.DELOG_PRODUCTS = [
             platform: 'windows',
             arch: 'x64',
             kind: 'installer',
-            filename: 'Driftly Setup 0.1.0.exe',
-            url: 'downloads/driftly/0.1.0/Driftly%20Setup%200.1.0.exe',
-            size: null,
-            sha256: null
+            filename: 'Driftly-Setup-0.1.0.exe',
+            url: 'https://github.com/delogreleases/driftly-releases/releases/download/v0.1.0/Driftly-Setup-0.1.0.exe',
+            size: 135809855,
+            sha256: 'f8a86f07005b933a75e510354892aa8513aa6f4a19b163267c2dc69413abeebc'
           }
         ]
       } /* @end-release */

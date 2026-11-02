@@ -1,6 +1,6 @@
 # Delog website
 
-The static website for **Delog** — tools for teams that ship websites — and its first product,
+The static website for **Delog QA** (Delog's testing-tools division; `companyName` in `site.config.js`) — tools for teams that ship websites — and its first product,
 **Driftly**, the all-in-one QA desk. People come here to see what Driftly does and download its
 installer. Plain HTML, CSS and JavaScript: no framework, no build step required, no server code,
 no analytics, no cookies, no external CDNs or font services. Upload the folder to any static host.
@@ -44,7 +44,7 @@ never shows placeholder text.
 | # | What | Do this |
 |---|---|---|
 | 1 | `site.config.js` | Fill in the company, legal entity, address, city/state, emails, base URL and hosting fields above, choose the contact-form provider, then `node tools/build-pages.mjs`. |
-| 2 | **Driftly installer** | The 0.1.0 entry points at `downloads/driftly/0.1.0/Driftly Setup 0.1.0.exe`, which does not exist yet (size and SHA-256 show “Published with the upload”). Build it in the Driftly repo (`npm run dist`), then `node tools/add-release.mjs driftly 0.1.0 "../what-changed-local/dist/Driftly Setup 0.1.0.exe"` and `node tools/build-pages.mjs`. |
+| 2 | **Driftly installer** | Done: 0.1.0 is hosted on GitHub Releases (`delogreleases/driftly-releases`, tag `v0.1.0`); its URL, size and SHA-256 are in `products.js`. For the next version publish a release there, then `node tools/add-release.mjs driftly <version> <installer> --url-base https://github.com/delogreleases/driftly-releases/releases/download/v<version>` and `node tools/build-pages.mjs`. |
 | 3 | Driftly 0.1.0 `date` in `products.js` | Set to `2026-10-10`; `add-release.mjs` sets the day you run it (`--date` / `--keep-date` to control). |
 | 4 | Legal review | `terms.html` (Website Terms of Use + Driftly EULA) and `privacy.html` are complete, professional texts written for this site and product — Indian governing law, free closed-source licence incl. commercial use, as-is, liability cap of INR 1,000, authorised-testing duty, data on device, optional network features. Have a lawyer review them before relying on them. |
 | 5 | `_headers` | Uncomment `Strict-Transport-Security` once the site is on HTTPS at its final domain. |
