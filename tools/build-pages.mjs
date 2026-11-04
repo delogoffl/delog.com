@@ -84,12 +84,27 @@ function fill(tpl, base, page) {
     .replace(/\{\{tagline\}\}/g, esc(SITE.tagline))
     .replace(/\{\{year\}\}/g, esc(C.year))
     .replace(/\{\{downloadHref\}\}/g, base + (shipping.length === 1 ? 'download.html?product=' + shipping[0].id : 'download.html'))
-    .replace(/\{\{productNav\}\}/g, shipping.slice(0, 3).map((p) => `<a href="${esc(R.productHref(p, { base, site: SITE }))}" data-nav="${esc(p.id)}">${esc(p.name)}</a>`).join('\n      '))
+    // The Products menu in the top bar: every product, with its icon and one line — any number of them.
+    .replace(/\{\{productMenu\}\}/g, () => productMenu(base, page))
+    .replace(/\{\{productsCurrent\}\}/g, page === 'products' || PRODUCTS.some((p) => p.id === page) ? ' aria-current="page"' : '')
     .replace(/\{\{productRows\}\}/g, shipping.map((p) => `<a href="${esc(R.productHref(p, { base, site: SITE }))}" data-nav="${esc(p.id)}">${p.icon ? `<img src="${esc(base + p.icon.replace('icon-256', 'icon-128'))}" alt="" width="22" height="22" loading="lazy" decoding="async">` : ''}${esc(p.name)}</a>`).join('\n    '))
     .replace(/\{\{productFooter\}\}/g, PRODUCTS.map((p) => `<li><a href="${esc(R.productHref(p, { base, site: SITE }))}">${esc(p.name)}</a></li>`).join('\n          '))
     .replace(/\{\{mark:(\w+)\}\}/g, (_, id) => mark(id))
     .replace(/\{\{icon:(\w+)(?::([\w-]+))?\}\}/g, (_, n, c) => R.icon(n, c))
     .replace(/(<a [^>]*data-nav="([\w-]+)"[^>]*)>/g, (m, open, key) => (key === page ? `${open} aria-current="page">` : m));
+}
+
+/** The top bar's Products menu: a slim row per product, then "All products". */
+function productMenu(base, page) {
+  const items = PRODUCTS.map((p) => {
+    const here = p.id === page;
+    const line = (p.launch && p.launch.job) || p.tagline;
+    const soon = p.status === 'coming-soon' ? '<em class="pmenu__soon">Coming soon</em>' : p.status === 'beta' ? '<em class="pmenu__soon">Beta</em>' : '';
+    return `<a class="pmenu__item accent-${esc(p.id)}" href="${esc(R.productHref(p, { base, site: SITE }))}"${here ? ' aria-current="page"' : ''}>` +
+      (p.icon ? `<img src="${esc(base + p.icon.replace('icon-256', 'icon-128'))}" alt="" width="28" height="28" loading="lazy" decoding="async">` : '<span class="pmenu__blank" aria-hidden="true"></span>') +
+      `<span class="pmenu__t"><b>${esc(p.name)}${soon}</b><span>${esc(line)}</span></span></a>`;
+  }).join('\n          ');
+  return `<div class="pmenu__list">\n          ${items}\n          </div>\n          <a class="pmenu__all" href="${esc(base)}products.html">All products${R.icon('chevronRight')}</a>`;
 }
 
 function metaBlock(meta, base) {

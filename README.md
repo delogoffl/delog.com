@@ -1,8 +1,8 @@
 # Delog website
 
-The static website for **Delog QA** (Delog's testing-tools division; `companyName` in `site.config.js`) — tools for teams that ship websites — and its first product,
-**Driftly**, the all-in-one QA desk. People come here to see what Driftly does and download its
-installer. Plain HTML, CSS and JavaScript: no framework, no build step required, no server code,
+The static website for **Delog** — tools for teams that ship websites — and its products:
+**Driftly**, the all-in-one QA desk, **Tracemend**, the test recorder that writes self-healing
+test code, and **Prism**, the API testing workspace. People come here to see what they do and download their installers. Plain HTML, CSS and JavaScript: no framework, no build step required, no server code,
 no analytics, no cookies, no external CDNs or font services. Upload the folder to any static host.
 
 Delog distributes **installers only**. Products may be open source, but the site never links to
@@ -34,7 +34,7 @@ never shows placeholder text.
 | `downloadHost` | Privacy Policy: who serves installers | “the same host that serves this website” |
 | `termsLastUpdated` | “Last updated” on Terms of Use and the EULA (`YYYY-MM-DD`) | Line hidden |
 | `privacyLastUpdated` | “Last updated” on the Privacy Policy | Line hidden |
-| `eulaVersion` | Version shown on the Driftly EULA | `1.0` |
+| `eulaVersion` | Version shown on the Driftly EULA (Tracemend's and Prism's are `license.version` in `products.js`) | `1.0` |
 | `social` | Optional footer links `[{ label, url }]` (never source-code hosts) | Hidden |
 | `codeSigning.windows` / `.macos` | Truthful signing copy (FAQ, download notes, SmartScreen help) | `false` = “not code-signed yet” |
 | `downloadBaseUrl`, `staticProductPages`, `defaultTheme`, `copyrightYear`, `tagline` | Site behaviour | Sensible defaults |
@@ -44,12 +44,16 @@ never shows placeholder text.
 | # | What | Do this |
 |---|---|---|
 | 1 | `site.config.js` | Fill in the company, legal entity, address, city/state, emails, base URL and hosting fields above, choose the contact-form provider, then `node tools/build-pages.mjs`. |
-| 2 | **Driftly installer** | Done: 0.1.0 is hosted on GitHub Releases (`delogreleases/driftly-releases`, tag `v0.1.0`); its URL, size and SHA-256 are in `products.js`. For the next version publish a release there, then `node tools/add-release.mjs driftly <version> <installer> --url-base https://github.com/delogreleases/driftly-releases/releases/download/v<version>` and `node tools/build-pages.mjs`. |
+| 2 | **Driftly installer** | The 0.1.0 entry points at `downloads/driftly/0.1.0/Driftly Setup 0.1.0.exe`, which does not exist yet (size and SHA-256 show “Published with the upload”). Build it in the Driftly repo (`npm run dist`), then `node tools/add-release.mjs driftly 0.1.0 "../what-changed-local/dist/Driftly Setup 0.1.0.exe"` and `node tools/build-pages.mjs`. |
 | 3 | Driftly 0.1.0 `date` in `products.js` | Set to `2026-10-10`; `add-release.mjs` sets the day you run it (`--date` / `--keep-date` to control). |
 | 4 | Legal review | `terms.html` (Website Terms of Use + Driftly EULA) and `privacy.html` are complete, professional texts written for this site and product — Indian governing law, free closed-source licence incl. commercial use, as-is, liability cap of INR 1,000, authorised-testing duty, data on device, optional network features. Have a lawyer review them before relying on them. |
 | 5 | `_headers` | Uncomment `Strict-Transport-Security` once the site is on HTTPS at its final domain. |
 | 6 | Driftly auto-update feed | Driftly's `electron-builder.yml` has `publish.url: https://downloads.example.com/driftly/`. If you use auto-update, host `latest.yml` + installer + `.blockmap` in one stable folder and point that URL at it. |
 | 7 | Screenshots | Real Driftly screens of the local demo store, in light and dark. The main-window shots were taken with the user name set to “Alex” (`USER_NAME=Alex npx tsx scripts/main-look.ts …` in the Driftly repo, on a copy of the demo data; `STUDIO_CHANGE="Checkout page changed"` picks the change). Re-shoot the same way when the UI changes. |
+| 8 | **Tracemend installer** | The 1.0.0 entry points at `downloads/tracemend/1.0.0/Tracemend Setup 1.0.0.exe`. Build it in the Tracemend repo (`npm run dist`, output in `release/`), then `node tools/add-release.mjs tracemend 1.0.0 "../release/Tracemend Setup 1.0.0.exe"` and `node tools/build-pages.mjs`. Check the “About 1 GB” disk-space line in its specs against the installed size. |
+| 9 | Tracemend screenshots and notices | Real screens of the bundled demo shop (Northwind Supply, user “Alex”), served on `localhost` so no local path shows. Re-shoot with `scripts/site-shots.mjs` in the Tracemend repo (its header has every step); `npm run notices` there writes `THIRD-PARTY-NOTICES.txt` (it also runs on every `npm run dist`, which ships it beside the app); copy it to `licenses/tracemend/` whenever its dependencies change. |
+| 10 | **Prism installer** | The 0.1.0 entry points at `downloads/prism/0.1.0/Prism Setup 0.1.0.exe`. Build it in the Prism repo (`npm run notices`, then `npm run dist`, output in `dist/`), then `node tools/add-release.mjs prism 0.1.0 "<Prism repo>/dist/Prism Setup 0.1.0.exe"` and `node tools/build-pages.mjs`. Check the “About 325 MB” disk-space line against the installed size. |
+| 11 | Prism screenshots and notices | Real screens of a workspace against the Tracemend repo's demo shop API (`examples/sandbox-server.mjs`, on `localhost:4173`), opened from a `subst` drive so no local path shows. Regenerate `licenses/prism/THIRD-PARTY-NOTICES.txt` with `npm run notices` in the Prism repo whenever its dependencies change, and copy it here. |
 
 ---
 
@@ -60,11 +64,11 @@ site.config.js        THE configuration file (company, legal, emails, hosting, d
 index.html            Home: Delog intro + Apple-style product tiles
 products.html         All products with filters (all / available / beta / coming soon / open source)
 product.html          Product page rendered from data: product.html?id=driftly  (noindex — see below)
-products/driftly.html Pre-rendered static product page (generated, crawlable, works without JS)
+products/<id>.html    Pre-rendered static product pages, driftly and tracemend (generated, crawlable, works without JS)
 download.html         Smart download page: download.html?product=driftly[&platform=macos]
 changelog.html        Release notes across products, newest first, product filter (?product=driftly)
 licenses.html         Product licenses, third-party notices, website fonts
-terms.html            Website Terms of Use + Driftly End User Licence Agreement
+terms.html            Website Terms of Use + the Driftly, Tracemend and Prism End User Licence Agreements
 privacy.html  contact.html  404.html
 assets/
   css/site.css        All styles (design tokens at the top; light + dark)
@@ -82,10 +86,11 @@ assets/
                       *-product files, every other page the *-pages files — ~114 KB / ~97 KB of JS)
   js/theme.js         Tiny <head> script that applies the saved theme before first paint
   fonts/              Geist + IBM Plex Mono (OFL-1.1, self-hosted)
-  img/                Favicon set, Open Graph images (og-default.png, og-driftly.png)
+  img/                Favicon set, Open Graph images (og-default.png, og-<product>.png)
   products/driftly/   Icon, screenshots (<name>-dark|light-800|1440.webp), compare/ before-after pair
+  products/tracemend/ Icon, screenshots
 downloads/<product>/<version>/   Installer files (filled by tools/add-release.mjs)
-licenses/             License texts (fonts, Driftly third-party notices)
+licenses/             License texts (fonts, Driftly, Tracemend and Prism third-party notices)
 favicon.ico  site.webmanifest  robots.txt  sitemap.xml  _headers  _redirects
 tools/                Development tools (Node 18+, no dependencies unless noted) — not needed at runtime
   build-pages.mjs     Bakes site.config.js in, stamps head/header/footer, pre-renders data, product pages, sitemap
@@ -293,8 +298,13 @@ weight preloaded and `font-display: swap`.
 
 To add a cinematic page for another product, give it a `launch` object like Driftly's:
 headline, line, stats, chapters (layouts `center`, `split`, `split-rev`, `bleed`, `verdict`,
-`terminal`; visuals `shot`, `compare`, `verdict`, `terminal`), bento (`anim` names are in
-`render.js` → `ANIM`) and specs. Without `launch`, a product gets the simpler page.
+`terminal`; visuals `shot`, `compare`, `verdict`, `terminal` — a terminal takes its own `label`
+and `caption`), bento (`anim` names are in `render-product.js` → `ANIM`; a tile's `say: [...]`
+puts its own words in the animation, as Tracemend's tiles do) and specs. Tracemend's page is the
+second example. A chapter can link elsewhere with `more: { href, label }` (Driftly's Recorder
+chapter points to Tracemend, its API chapter to Prism). Give each launch page a `job` (one line) and a `role` (two sentences):
+once two or more products have them, every product page shows a "which one?" section ("Driftly or Tracemend?" for two, "Which one do you need?" for more)
+with each one's job side by side, its own marked, so visitors pick the right tool. Without `launch`, a product gets the simpler page.
 
 Security: a strict Content-Security-Policy (`default-src 'none'`, scripts/styles/fonts/images from
 the site only, no inline scripts or styles), `nosniff`, `frame-ancestors 'none'`, and no

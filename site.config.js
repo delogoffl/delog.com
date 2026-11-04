@@ -14,7 +14,7 @@
  */
 window.DELOG_SITE = {
   /* ── Company ─────────────────────────────────────────────────────────────────────────────── */
-  companyName: 'Delog QA',              // brand name shown across the site (Delog's testing-tools division)
+  companyName: 'Delog',                 // brand name shown across the site
   legalName: '',                        // registered legal entity, e.g. 'Delog Technologies Private Limited'
   registeredAddress: '',                // one line, e.g. '12 Example Road, Adyar, Chennai 600020'
   city: '',                             // city whose courts have jurisdiction (Terms, EULA), e.g. 'Chennai'

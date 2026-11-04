@@ -2,7 +2,7 @@
 <header class="pnav" data-pnav>
   <div class="pnav__in">
     <div class="pnav__isle pnav__brand">
-      <a class="pnav__logo" href="{{base}}index.html" aria-label="{{company}} — home">{{mark:h}}<span class="pnav__word">delog</span><span class="pnav__div">QA</span></a>
+      <a class="pnav__logo" href="{{base}}index.html" aria-label="{{company}} — home">{{mark:h}}<span class="pnav__word">delog</span></a>
       {{productName}}
     </div>
     <div class="pnav__isle pnav__mid">
@@ -10,13 +10,15 @@
       <div class="pnav__groups">
         <nav class="pnav__group pnav__group--main" id="site-nav" aria-label="Main" data-glide>
           <span class="pnav__glide" aria-hidden="true"></span>
-          {{productNav}}
-          <a href="{{base}}products.html" data-nav="products">Products</a>
+          <a class="pnav__drop" href="{{base}}products.html" data-drop aria-haspopup="true" aria-expanded="false" aria-controls="nav-products"{{productsCurrent}}>Products{{icon:chevronDown:pnav__chev}}</a>
           <a href="{{base}}changelog.html" data-nav="changelog" data-secondary>Changelog</a>
           <a href="{{base}}licenses.html" data-nav="licenses" data-secondary>Licenses</a>
           <a href="{{base}}contact.html" data-nav="contact">Contact</a>
         </nav>
         {{productLinks}}
+        <div class="pmenu" id="nav-products" data-drop-panel hidden>
+          {{productMenu}}
+        </div>
       </div>
       <a class="pnav__mini pnav__mini--cta" href="{{downloadHref}}" tabindex="-1">Download</a>
     </div>

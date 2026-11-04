@@ -30,6 +30,12 @@ const PAGES = [
   ['product-static', '/products/driftly.html'],
   ['product-dynamic', '/product.html?id=driftly'],
   ['download', '/download.html?product=driftly'],
+  ['tracemend-static', '/products/tracemend.html'],
+  ['tracemend-dynamic', '/product.html?id=tracemend'],
+  ['tracemend-download', '/download.html?product=tracemend'],
+  ['prism-static', '/products/prism.html'],
+  ['prism-dynamic', '/product.html?id=prism'],
+  ['prism-download', '/download.html?product=prism'],
   ['download-picker', '/download.html'],
   ['changelog', '/changelog.html'],
   ['licenses', '/licenses.html'],
@@ -301,6 +307,20 @@ await interact('terminal', '/products/driftly.html#ci', async (p) => {
   const op = await p.evaluate(() => Number(getComputedStyle(document.querySelector('#ci .term__line--verdict')).opacity));
   if (op < 0.99) throw new Error('verdict line not shown after typing (' + op + ')');
   await p.screenshot({ path: path.join(OUT, 'interaction-terminal.png') });
+});
+await interact('terminal (Tracemend)', '/products/tracemend.html#ci', async (p) => {
+  await p.locator('[data-term]').first().scrollIntoViewIfNeeded();
+  await p.waitForTimeout(5200);
+  const op = await p.evaluate(() => Number(getComputedStyle(document.querySelector('#ci .term__line--verdict')).opacity));
+  if (op < 0.99) throw new Error('verdict line not shown after typing (' + op + ')');
+  await p.screenshot({ path: path.join(OUT, 'interaction-terminal-tracemend.png') });
+});
+await interact('terminal (Prism)', '/products/prism.html#ci', async (p) => {
+  await p.locator('[data-term]').first().scrollIntoViewIfNeeded();
+  await p.waitForTimeout(5200);
+  const op = await p.evaluate(() => Number(getComputedStyle(document.querySelector('#ci .term__line--verdict')).opacity));
+  if (op < 0.99) throw new Error('verdict line not shown after typing (' + op + ')');
+  await p.screenshot({ path: path.join(OUT, 'interaction-terminal-prism.png') });
 });
 await interact('reduced motion', '/products/driftly.html', async (p) => {
   const r = await p.evaluate(() => ({
