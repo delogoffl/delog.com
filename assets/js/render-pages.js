@@ -44,13 +44,19 @@
       '<div class="pcard__foot">' + foot + '</div>' +
       '</article>';
   }
+  /** "Driftly", "Driftly and Tracemend", "Driftly, Tracemend and Lumen". */
+  function names(products, ctx) {
+    var list = (products || []).filter(function (p) { return p.status !== 'coming-soon'; }).map(function (p) { return p.name; });
+    if (!list.length) return cfg(ctx.site).company;
+    return list.length === 1 ? list[0] : list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1];
+  }
   function nextCard(ctx) {
     var e = cfg(ctx.site)['email.general'];
     return '<article class="pcard pcard--next" data-status="next" data-oss="false">' +
       '<div class="pcard__top"><span class="next-mark" aria-hidden="true">' + icon('plus') + '</span></div>' +
       '<p class="eyebrow pcard__cat">In the workshop</p>' +
       '<h3 class="pcard__name">More tools are on the way</h3>' +
-      '<p class="pcard__tag">From the team behind Driftly.</p>' +
+      '<p class="pcard__tag">From the team behind ' + esc(names(ctx.products, ctx)) + '.</p>' +
       '<p class="pcard__desc">Every new tool for teams that ship websites arrives the same way: a plain installer, a SHA-256 checksum next to every file, and release notes for every version.</p>' +
       '<div class="plats" aria-hidden="true"></div>' +
       '<div class="pcard__foot">' + (e ? '<a class="btn btn--ghost btn--sm pcard__action" href="' + esc(mailto(e, 'Tell me about new ' + cfg(ctx.site).company + ' tools')) + '">' + icon('mail') + 'Tell me when there’s news</a>' : '') + '</div>' +

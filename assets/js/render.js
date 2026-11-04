@@ -93,8 +93,8 @@
     v.formSends = prov !== 'mailto' ? 'yes' : '';
     v.privacyTitle = prov === 'mailto' ? 'This website collects nothing.' : 'This website collects almost nothing.';
     v.privacyLead = prov === 'mailto'
-      ? 'No cookies, no analytics, no tracking pixels and no requests to anyone else. Here is exactly what happens when you visit, download or write to us — and how Driftly handles your data.'
-      : 'No cookies, no analytics and no tracking pixels. The only thing this site sends anywhere is a contact-form message you choose to submit. Here is exactly what happens when you visit, download or write to us — and how Driftly handles your data.';
+      ? 'No cookies, no analytics, no tracking pixels and no requests to anyone else. Here is exactly what happens when you visit, download or write to us — and how our software handles your data.'
+      : 'No cookies, no analytics and no tracking pixels. The only thing this site sends anywhere is a contact-form message you choose to submit. Here is exactly what happens when you visit, download or write to us — and how our software handles your data.';
     v.formBullet = prov === 'mailto'
       ? 'No form that sends data. The contact form opens your own email app with your message filled in; contact links do the same.'
       : 'One form, only when you use it. The contact form sends the message you write to ' + who + '; nothing else is collected.';

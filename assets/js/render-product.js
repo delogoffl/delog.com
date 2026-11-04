@@ -58,30 +58,33 @@
       }).join('');
       return '<figure class="term" data-term>' +
         '<div class="term__bar" aria-hidden="true"><span class="vframe__dots"><i></i><i></i><i></i></span><span class="term__title">Windows PowerShell</span></div>' +
-        '<pre class="term__body" tabindex="0" aria-label="driftly ci output"><code>' +
+        '<pre class="term__body" tabindex="0" aria-label="' + esc(v.label || p.name + ' command output') + '"><code>' +
         '<span class="term__line term__line--cmd"><span class="term__ps">PS&gt;</span> <span class="term__type" data-chars="' + esc(String(v.command.length)) + '">' + esc(v.command) + '</span></span>' +
         lines +
         '<span class="term__line term__line--verdict">' + esc(v.verdict) + '</span>' +
         (v.artifacts ? '<span class="term__line term__line--dim">' + esc(v.artifacts) + '</span>' : '') +
-        '</code></pre><figcaption class="sr-only">Output of the driftly ci command for the demo store.</figcaption></figure>';
+        '</code></pre><figcaption class="sr-only">' + esc(v.caption || 'Output of ' + v.command + ' for the demo store.') + '</figcaption></figure>';
     }
     return frame(shot(v.src, ctx, v.alt, '', false, sizes), p.name);
   }
+  // Each animation may take a tile's own words, `say` (an array), and falls back to its own.
+  function said(say, i, fallback) { return esc(say && say[i] != null ? say[i] : fallback); }
   var ANIM = {
-    diff: '<span class="a-diff"><span class="a-diff__old">Place order</span><span class="a-diff__new">Pay now</span></span>',
+    diff: function (say) { return '<span class="a-diff"><span class="a-diff__old">' + said(say, 0, 'Place order') + '</span><span class="a-diff__new">' + said(say, 1, 'Pay now') + '</span></span>'; },
     radar: '<span class="a-radar"><i></i><i></i><i></i><b></b><em></em><em></em><em></em></span>',
-    budget: '<span class="a-budget"><span class="a-budget__track"><i class="a-budget__fill"></i><i class="a-budget__line"></i></span><span class="a-budget__lbl">LCP · budget 2,500 ms</span></span>',
+    budget: function (say) { return '<span class="a-budget"><span class="a-budget__track"><i class="a-budget__fill"></i><i class="a-budget__line"></i></span><span class="a-budget__lbl">' + said(say, 0, 'LCP · budget 2,500 ms') + '</span></span>'; },
     verdict: '<span class="a-verdict"><b class="a-verdict__go">GO</b><b class="a-verdict__no">NO-GO</b></span>',
-    locator: '<span class="a-loc"><code class="a-loc__code"><span class="a-loc__t">getByTestId(\'account-welcome\')</span></code><span class="a-loc__ok">healed</span></span>',
+    locator: function (say) { return '<span class="a-loc"><code class="a-loc__code"><span class="a-loc__t">' + said(say, 0, 'getByTestId(\'account-welcome\')') + '</span></code><span class="a-loc__ok">' + said(say, 1, 'healed') + '</span></span>'; },
     strip: '<span class="a-strip">' + new Array(15).join('<i></i>') + '</span>',
     noise: '<span class="a-noise"><s>5 min ago</s><s>10:42:07</s><b>$12/mo</b></span>',
     bell: '<span class="a-bell">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + '<path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>' + '</svg><b>3</b></span>',
-    api: '<span class="a-api"><code>GET /api/me</code><span class="a-api__s"><b class="a-api__ok">200</b><b class="a-api__bad">401</b></span></span>',
-    ask: '<span class="a-ask"><span class="a-ask__me">What changed today?</span><span class="a-ask__ai">6 pages changed — 2 are critical.</span></span>',
-    ci: '<span class="a-ci"><code>PS&gt; driftly ci "Demo Store"</code><code class="a-ci__v">NO-GO — exit 1</code></span>',
+    api: function (say) { return '<span class="a-api"><code>' + said(say, 0, 'GET /api/me') + '</code><span class="a-api__s"><b class="a-api__ok">' + said(say, 1, '200') + '</b><b class="a-api__bad">' + said(say, 2, '401') + '</b></span></span>'; },
+    ask: function (say) { return '<span class="a-ask"><span class="a-ask__me">' + said(say, 0, 'What changed today?') + '</span><span class="a-ask__ai">' + said(say, 1, '6 pages changed — 2 are critical.') + '</span></span>'; },
+    ci: function (say) { return '<span class="a-ci"><code>PS&gt; ' + said(say, 0, 'driftly ci "Demo Store"') + '</code><code class="a-ci__v">' + said(say, 1, 'NO-GO — exit 1') + '</code></span>'; },
     share: '<span class="a-share"><span class="a-share__file">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"/><path d="M14 3.5V8h4.5"/></svg>' + '<span>dashboard.html</span></span><span class="a-share__lock">' + '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>' + '</span></span>',
-    bug: '<span class="a-bug"><span><b>Expected</b>Pay now</span><span class="a-bug__bad"><b>Actual</b>Place order</span><em>QA-128 · filed</em></span>'
+    bug: function (say) { return '<span class="a-bug"><span><b>Expected</b>' + said(say, 0, 'Pay now') + '</span><span class="a-bug__bad"><b>Actual</b>' + said(say, 1, 'Place order') + '</span><em>' + said(say, 2, 'QA-128 · filed') + '</em></span>'; }
   };
+  function anim(b) { var a = ANIM[b.anim]; return typeof a === 'function' ? a(b.say) : a || ''; }
 
   // Giant stats. Number, label and detail live in ONE element, in reading order, so they can …
   function statsRow(stats, cls) {
@@ -124,7 +127,7 @@
     if (!p.screenshots || !p.screenshots.length) return '';
     var pick = p.screenshots.slice(0, 3);
     return '<section class="lx-section shots" id="screenshots"><div class="container"><div class="shots__intro">' +
-      '<header class="lx-head lx-head--left"><h2>Screenshots</h2><p>Every screen, checking a local demo store. Select one to see it full size.</p></header>' +
+      '<header class="lx-head lx-head--left"><h2>Screenshots</h2><p>' + esc((p.launch && p.launch.shotsLead) || 'Every screen, checking a local demo store.') + ' Select one to see it full size.</p></header>' +
       '<div class="stack3d" data-anim aria-hidden="true">' + pick.map(function (sh, i) {
         return '<div class="stack3d__card stack3d__card--' + (i + 1) + '">' + shot(sh.src, ctx, '', '', false, '(min-width: 1000px) 520px, 80vw') + '</div>';
       }).join('') + '</div></div>' +
@@ -177,10 +180,34 @@
       '<li><a class="link-more" href="' + esc((ctx.base || '') + 'terms.html#website-terms') + '">Terms of Use' + icon('chevronRight') + '</a></li>' +
       (L.thirdParty ? '<li><a class="link-more" href="' + esc(url(L.thirdParty, ctx)) + '">Third-party notices' + icon('chevronRight') + '</a></li>' : '') +
       '</ul>' +
-      (isOss(p) ? '' : '<p class="lic__meta">EULA version <span data-cfg="eulaVersion">' + esc(C.eulaVersion) + '</span>' +
+      // A product with its own EULA version (license.version) shows it; otherwise the site's.
+      (isOss(p) ? '' : '<p class="lic__meta">EULA version ' + (L.version ? esc(L.version) : '<span data-cfg="eulaVersion">' + esc(C.eulaVersion) + '</span>') +
         '<span data-cfg-if="termsDate"' + (C.termsDate ? '' : ' hidden') + '> · Updated <span data-cfg="termsDate">' + esc(C.termsDate) + '</span></span></p>') +
       '</div>';
     return h;
+  }
+
+  // "Driftly or Tracemend?": each product's job in a sentence (launch.role), side by side, the
+  // page's own marked — so nobody downloads one when they wanted the other. Needs two or more.
+  function whichOne(p, ctx) {
+    var list = (ctx.products || []).filter(function (x) { return x.launch && x.launch.role; });
+    if (list.length < 2 || !p.launch.role) return '';
+    // "Driftly or Tracemend?" reads well for two; past that, the names stop being a question.
+    var n = list.length, count = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][n];
+    var title = n === 2 ? list[0].name + ' or ' + list[1].name + '?' : 'Which one do you need?';
+    var lead = (count ? count + ' tools, ' + count.toLowerCase() + ' jobs.' : 'Different tools, different jobs.') +
+      (n === 2 ? ' Both free, both on your own computer.' : ' All free, all on your own computer.');
+    return rule() + '<section class="lx-section which" id="which" aria-labelledby="which-' + esc(p.id) + '"><div class="container">' +
+      '<header class="lx-head reveal"><h2 id="which-' + esc(p.id) + '">' + esc(title) + '</h2><p>' + esc(lead) + '</p></header>' +
+      '<ul class="which__list">' + list.map(function (x) {
+        var here = x.id === p.id;
+        return '<li class="which__card accent-' + esc(x.id) + (here ? ' is-here' : '') + ' reveal">' +
+          '<p class="which__name">' + img(x.icon, ctx, '', 36, 36, 'which__icon') + '<span>' + esc(x.name) + '</span>' + (here ? '<em class="which__here">You’re here</em>' : '') + '</p>' +
+          '<h3 class="which__job">' + esc(x.launch.job || x.tagline) + '</h3>' +
+          '<p class="which__role">' + txt(x.launch.role) + '</p>' +
+          (here ? '' : '<p class="which__go"><a class="link-more" href="' + esc(R.productHref(x, ctx)) + '">Meet ' + esc(x.name) + icon('chevronRight') + '</a></p>') +
+          '</li>';
+      }).join('') + '</ul></div></section>';
   }
 
   function launchCta(p, ctx, href, label) {
@@ -218,7 +245,8 @@
       return (ci ? rule() : '') + '<section class="chap chap--' + esc(c.layout || 'center') + '" id="' + esc(c.id) + '"><div class="container"><div class="chap__grid">' +
         '<header class="chap__head reveal"><p class="chap__eyebrow">' + esc(c.eyebrow) + '</p><h2 class="chap__title">' + esc(c.title) + '</h2>' +
         '<p class="chap__text">' + txt(c.text) + '</p>' +
-        (c.points ? '<ul class="chap__points">' + c.points.map(function (pt) { return '<li>' + esc(pt) + '</li>'; }).join('') + '</ul>' : '') + '</header>' +
+        (c.points ? '<ul class="chap__points">' + c.points.map(function (pt) { return '<li>' + esc(pt) + '</li>'; }).join('') + '</ul>' : '') +
+        (c.more ? '<p class="chap__more"><a class="link-more" href="' + esc(url(c.more.href, ctx)) + '">' + esc(c.more.label) + icon('chevronRight') + '</a></p>' : '') + '</header>' +
         '<div class="chap__visual reveal">' + visual(c.visual, ctx, p) + '</div>' +
         '</div></div></section>';
     }).join('') + '</div>';
@@ -226,10 +254,11 @@
     if (L.bento && L.bento.length) {
       h += rule() + '<section class="lx-section" id="everything"><div class="container"><header class="lx-head reveal"><h2>Everything in one place.</h2></header><ul class="bento" data-anim>' +
         L.bento.map(function (b) {
-          return '<li class="tile tile--' + esc(b.size || 's') + ' reveal" data-tilt3d="5"><div class="tile__anim" aria-hidden="true">' + (ANIM[b.anim] || '') + '</div>' +
+          return '<li class="tile tile--' + esc(b.size || 's') + ' reveal" data-tilt3d="5"><div class="tile__anim" aria-hidden="true">' + anim(b) + '</div>' +
             '<h3 class="tile__title">' + esc(b.title) + '</h3><p class="tile__text">' + txt(b.text) + '</p></li>';
         }).join('') + '</ul></div></section>';
     }
+    h += whichOne(p, ctx);
     // Screenshots …
     if (p.screenshots && p.screenshots.length) h += rule() + screenshotsSection(p, ctx);
     // Tech specs …

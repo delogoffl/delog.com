@@ -116,6 +116,51 @@
     if (window.ResizeObserver) new ResizeObserver(function () { if (group.offsetWidth && !group.matches(':hover,:focus-within')) glideHome(group); }).observe(group);
   });
 
+  /* --- the Products menu in the top bar */
+
+  // A link to the Products page that opens a menu of every product instead (without JavaScript
+  // it simply goes there). Click or Enter opens it; Escape, a click outside or leaving it closes it;
+  // the arrow keys move between its items. On a pointer that hovers, resting on it opens it too.
+  var drop = $('[data-drop]'), dropPanel = $('[data-drop-panel]'), dropTimer = 0;
+  function dropOpen() { return dropPanel && !dropPanel.hidden; }
+  function setDrop(open, focus) {
+    if (!drop || !dropPanel || open === dropOpen()) { if (open && focus) focusItem(0); return; }
+    dropPanel.hidden = !open;
+    drop.setAttribute('aria-expanded', String(open));
+    if (pnav) pnav.classList.toggle('has-menu', open);
+    if (open && focus) focusItem(0);
+    if (!open && focus === 'back') drop.focus();
+  }
+  function items() { return $$('a', dropPanel); }
+  function focusItem(i) { var list = items(); if (list.length) list[(i + list.length) % list.length].focus(); }
+  if (drop && dropPanel) {
+    drop.addEventListener('click', function (e) {
+      e.preventDefault();
+      // e.detail is 0 for a keyboard press: then the first product takes the focus.
+      setDrop(!dropOpen(), e.detail === 0);
+    });
+    drop.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); setDrop(true, true); }
+    });
+    dropPanel.addEventListener('keydown', function (e) {
+      var list = items(), i = list.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); focusItem(i + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); if (i <= 0) setDrop(false, 'back'); else focusItem(i - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); focusItem(0); }
+      else if (e.key === 'End') { e.preventDefault(); focusItem(-1); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dropOpen()) { e.preventDefault(); setDrop(false, 'back'); } });
+    document.addEventListener('pointerdown', function (e) { if (dropOpen() && !dropPanel.contains(e.target) && !drop.contains(e.target)) setDrop(false); });
+    dropPanel.addEventListener('focusout', function (e) { if (e.relatedTarget && !dropPanel.contains(e.relatedTarget) && e.relatedTarget !== drop) setDrop(false); });
+    if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var hoverIn = function () { clearTimeout(dropTimer); dropTimer = setTimeout(function () { setDrop(true); }, 120); };
+      var hoverOut = function () { clearTimeout(dropTimer); dropTimer = setTimeout(function () { setDrop(false); }, 260); };
+      [drop, dropPanel].forEach(function (el) { el.addEventListener('pointerenter', hoverIn); el.addEventListener('pointerleave', hoverOut); });
+    }
+    // The product's own section links take over the bar past the hero: the menu goes with the main links.
+    window.addEventListener('scroll', function () { if (dropOpen() && pnav && pnav.classList.contains('is-product')) setDrop(false); }, { passive: true });
+  }
+
   /* --- site config into static pages */
 
   // site.config.js → [data-cfg] text, [data-cfg-if]/[data-cfg-unless] visibility, [data-email] links.

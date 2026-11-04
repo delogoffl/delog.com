@@ -691,7 +691,7 @@ main.flush { padding-bottom: 0; }
 .site-footer { background: var(--bg-2); color: var(--text-3); font-size: 12px; line-height: 1.5; padding: 22px 0 28px; border-top: 1px solid var(--hair); }
 .footer-note { margin: 0; padding-bottom: 16px; border-bottom: 1px solid var(--hair); }
 .footer-note p { margin: 0 0 8px; }
-.footer-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; padding: 22px 0; }
+.footer-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) auto; gap: 24px; padding: 22px 0; }
 .footer-col h2 { margin: 0 0 10px; color: var(--text); font-size: 12px; font-weight: 600; letter-spacing: 0; }
 .footer-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .footer-col a { color: var(--text-3); text-decoration: none !important; }
@@ -748,7 +748,7 @@ main.flush { padding-bottom: 0; }
   .chap--split .chap__head, .chap--split-rev .chap__head { grid-column: 1 / -1; text-align: center; }
   .chap--split .chap__text, .chap--split-rev .chap__text { margin-left: auto; }
   .chap--split .chap__visual, .chap--split-rev .chap__visual { grid-column: 1 / -1; grid-row: auto; margin-top: 56px; }
-  .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .footer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .p-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 833px) {
@@ -1012,8 +1012,6 @@ html { scroll-padding-top: 92px; }
 .pnav.is-compact .pnav__mini--cta { margin-left: 4px; padding: 0 16px; }
 .pnav__logo { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-size: 17px; font-weight: 650; letter-spacing: -0.05em; white-space: nowrap; }
 .pnav__logo:hover { text-decoration: none; }
-/* Division tag next to the wordmark: "delog QA". */
-.pnav__div { margin-left: -2px; padding: 2px 7px; border-radius: 7px; font-size: 11px; font-weight: 700; letter-spacing: .08em; line-height: 1.3; color: #0d0e14; background: linear-gradient(135deg, #bdbfff, #5eead4); }
 .pnav__logo .logo__mark { width: 26px; height: 26px; transition: transform .5s var(--spring); }
 .pnav__logo:hover .logo__mark { transform: rotate(-10deg) scale(1.06); }
 .pnav__product-name { margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border); color: var(--text); font-size: 15px; font-weight: 650; letter-spacing: -0.02em; white-space: nowrap; }
@@ -1277,3 +1275,45 @@ main[data-render="download-page"], main[data-render="product-page"]:empty, main[
 .contact__list > div:not([hidden]) ~ div { border-top: 1px solid var(--hair); }
 .contact__fine { margin: 0; }
 .contact__list:has(> div:not([hidden])) ~ .contact__fine, .contact__fine ~ .contact__fine:not([hidden]) { margin-top: 14px; }
+
+/* ======================================================================= which one
+   "Driftly or Tracemend?" — each product's job, side by side, in its own accent. */
+.which__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; max-width: 1000px; margin: 0 auto; padding: 0; list-style: none; }
+.which__card { --link: var(--accent); display: flex; flex-direction: column; gap: 12px; padding: 34px; border-radius: 28px; background: var(--tile); border: 1px solid transparent; }
+.which__card.is-here { border-color: var(--accent); }
+.which__name { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -0.02em; }
+.which__icon { border-radius: 9px; }
+.which__here { margin-left: auto; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: var(--bg); font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0; }
+.which__job { margin: 6px 0 0; color: var(--accent); font-size: clamp(1.45rem, 1rem + 1vw, 1.9rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; }
+.which__role { margin: 0; color: var(--text-2); font-size: 17px; line-height: 1.5; }
+.which__go { margin: auto 0 0; padding-top: 8px; font-size: 17px; }
+.chap__more { margin: 18px 0 0; font-size: 17px; }
+
+/* ======================================================================= Products menu
+   A slim list under "Products" in the top bar: icon, name and one line per product, then All
+   products. It grows down with the catalogue, never across the bar. */
+.pnav__drop .pnav__chev { width: 12px; height: 12px; margin-left: 3px; opacity: .6; transition: transform .3s var(--ease); }
+.pnav__drop[aria-expanded="true"] .pnav__chev { transform: rotate(180deg); }
+.pmenu { position: absolute; top: calc(100% + 15px); left: -4px; z-index: 5; width: min(284px, calc(100vw - 32px)); padding: 5px; border-radius: 18px; background: var(--bg); border: 1px solid color-mix(in srgb, var(--text) 11%, transparent); box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 24px 60px -24px rgba(0, 0, 0, .55); pointer-events: auto; transform-origin: 40px 0; animation: pmenu-in .28s var(--ease) both; }
+.pmenu[hidden] { display: none; }
+@keyframes pmenu-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } }
+.pmenu__list { display: flex; flex-direction: column; gap: 1px; max-height: min(60vh, 420px); overflow-y: auto; }
+.pmenu__item { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 7px 9px; border-radius: 12px; color: var(--text); text-decoration: none !important; transition: background-color .15s; }
+.pmenu__item:hover, .pmenu__item:focus-visible { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.pmenu__item[aria-current] { background: color-mix(in srgb, var(--accent) 13%, transparent); }
+.pmenu__item img, .pmenu__blank { flex: none; width: 28px; height: 28px; border-radius: 7px; }
+.pmenu__blank { background: color-mix(in srgb, var(--text) 10%, transparent); }
+.pmenu__t { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.pmenu__t b { display: flex; align-items: center; font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; }
+.pmenu__t > span { overflow: hidden; color: var(--text-3); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.pmenu__soon { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: color-mix(in srgb, var(--text) 10%, transparent); color: var(--text-2); font-size: 10.5px; font-style: normal; font-weight: 600; line-height: 1.6; }
+.pmenu__all { display: flex; align-items: center; gap: 2px; margin: 4px 0 0; padding: 8px 9px 4px; border-top: 1px solid var(--hair); color: var(--text-2); font-size: 12.5px; font-weight: 500; text-decoration: none !important; }
+.pmenu__all:hover, .pmenu__all:focus-visible { color: var(--text); }
+.pmenu__all .i { width: 13px; height: 13px; }
+@media (prefers-reduced-motion: reduce) { .pmenu { animation: none; } .pnav__drop .pnav__chev { transition: none; } }
+
+/* Products page and the home page's catalogue: two products to a row; one on a phone. */
+.grid-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* "More tools are on the way", alone on its row, takes the whole row. */
+.grid-cards > .pcard--next:nth-child(odd):last-child { grid-column: 1 / -1; }
+@media (max-width: 760px) { .grid-cards { grid-template-columns: minmax(0, 1fr); } }
